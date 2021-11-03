@@ -24,8 +24,9 @@ module Highlighting
   file = ARGV[0]
   theme = select_theme()
   # system "which highlight"
-  system "highlight -O xterm256 #{file} --config-file=#{theme}"
-
+  comm = "highlight -O xterm256 #{file} --config-file=#{theme}"
+  comm += " --syntax=ruby"
+  system comm
 end
 
 
