@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 require 'command_line/global'
-require 'fileutils'
 require 'tempfile'
 require_relative "highlighting/version"
 
@@ -21,26 +20,28 @@ module Highlighting
   end
 
   theme = select_theme()
-
-  file = ARGV[0]
+  p ARGV
+  file = ARGV.shift
   if file == nil
     puts "No file assigned."
-    file = "./tmp_hoge.rb"
+#    file = "./tmp_hoge.rb"
 
-    idx = 0
-    f1 = Tempfile.open(['hoge', 'bar'],'w')
-    file = f1.path
-    while str = $stdin.gets
-      f1.print "#{idx} #{str}"
-#      $stdout.print "#{idx} #{str}"
-      idx += 1
+    Tempfile.open(['lightning', '.rb']) do |f1|
+      p file = f1.path
+      break unless FileTest.pipe?(STDIN)
+
+      idx = 0
+      while str = $stdin.gets
+        f1.print "#{idx} #{str}"
+        #      $stdout.print "#{idx} #{str}"
+        idx += 1
+      end
+
     end
-    f1.close
   end
-
+  p file
   comm = "highlight -O xterm256 #{file} --config-file=#{theme}"
   comm += " --syntax=ruby"
   system comm
-  FileUtils.rm(file)
 end
 
