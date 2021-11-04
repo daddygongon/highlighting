@@ -44,4 +44,3 @@ module Highlighting
   FileUtils.rm(file)
 end
 
-
