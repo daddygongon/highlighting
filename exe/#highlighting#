@@ -1,7 +1,0 @@
-#!/usr/bin/env ruby
-
-require "highlighting"
-
-Highlighting::CLI.start(ARGV)
-
-#puts Highlighting::main(ARGV)
