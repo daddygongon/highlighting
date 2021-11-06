@@ -1,7 +1,9 @@
 # frozen_string_literal: true
+require "highlighting/version"
+require 'cli'
 require 'command_line/global'
 require 'tempfile'
-require_relative "highlighting/version"
+
 
 module Highlighting
   class Error < StandardError; end
@@ -35,7 +37,7 @@ module Highlighting
     file = if FileTest.pipe?(STDIN)
              mk_temp_file
            else
-             tmp = argv.shift
+             tmp = argv
              tmp == "test/highlighting_test.rb" ? nil : tmp
            end
     return 'no file or pipe assigned.' if file == nil
