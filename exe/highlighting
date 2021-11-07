@@ -2,6 +2,6 @@
 
 require "highlighting"
 
-Highlighting::CLI.start(ARGV)
+#Highlighting::CLI.start(ARGV)
 
-#puts Highlighting::main(ARGV)
+puts Highlighting::main(ARGV)

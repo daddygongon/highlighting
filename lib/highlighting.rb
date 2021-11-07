@@ -10,6 +10,21 @@ module Highlighting
   # Your code goes here...
   module_function
 
+  def main(argv)
+    theme = select_theme( ENV["TERM_PROGRAM"] )
+    file = if FileTest.pipe?(STDIN)
+             mk_temp_file
+           else
+             tmp = argv.shift
+             tmp == "test/highlighting_test.rb" ? nil : tmp
+           end
+    return 'no file or pipe assigned.' if file == nil
+
+    comm = "highlight -O xterm256 #{file} --config-file=#{theme}"
+    comm += " --syntax=ruby"
+    command_line(comm).stdout.chomp #return
+  end
+
   def select_theme(term_program=nil)
     theme = if term_program =="Apple_Terminal"
               res = command_line "defaults read -g AppleInterfaceStyle"
@@ -32,20 +47,6 @@ module Highlighting
     end
   end
 
-  def main(argv)
-    theme = select_theme( ENV["TERM_PROGRAM"] )
-    file = if FileTest.pipe?(STDIN)
-             mk_temp_file
-           else
-             tmp = argv
-             tmp == "test/highlighting_test.rb" ? nil : tmp
-           end
-    return 'no file or pipe assigned.' if file == nil
-
-    comm = "highlight -O xterm256 #{file} --config-file=#{theme}"
-    comm += " --syntax=ruby"
-    command_line(comm).stdout.chomp #return
-  end
 end
 
 
