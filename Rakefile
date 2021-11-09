@@ -2,6 +2,8 @@
 
 require 'bundler/gem_tasks'
 require 'rake/testtask'
+require "rspec/core/rake_task"
+
 
 Rake::TestTask.new(:test) do |t|
   t.options = "-t'HighlightTest' -v"
@@ -11,8 +13,6 @@ Rake::TestTask.new(:test) do |t|
 end
 
 # task default: :test
-
-require "rspec/core/rake_task"
 
 RSpec::Core::RakeTask.new(:spec)
 
